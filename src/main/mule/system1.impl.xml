@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="73cf33b9-874c-41ea-b4a5-1b65532ac8e9" >
+		<http:request-connection host="local" port="80" />
+	</http:request-config>
+	<flow name="system1.implFlow" doc:id="1ae8ae34-dcae-486c-9f62-527c40a2e175" >
+		<db:select doc:name="Select" doc:id="1469f501-1bdb-4e02-b074-47d0c66dba04" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from student]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="e9e4a97e-e91f-46de-a3fa-c3dc7a34f394" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
